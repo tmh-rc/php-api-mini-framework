@@ -15,7 +15,7 @@ class Facade
     {
         $instance = static::getFacadeAccessor();
 
-        if (! $instance) {
+        if (!$instance) {
             throw new RuntimeException('A facade root has not been set.');
         }
 

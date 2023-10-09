@@ -3,15 +3,15 @@
 use Core\Request;
 use Core\Response;
 
-if (! function_exists('base_path')) {
+if (!function_exists('base_path')) {
     function base_path($path)
     {
-        return BASE_PATH.$path;
+        return BASE_PATH . $path;
     }
 }
 
-if (! function_exists('dd')) {
-    function dd($value)
+if (!function_exists('dd')) {
+    function dd(...$value)
     {
         echo '<pre>';
         var_dump($value);
@@ -20,15 +20,15 @@ if (! function_exists('dd')) {
     }
 }
 
-if (! function_exists('p')) {
+if (!function_exists('p')) {
     function p($array)
     {
-        echo '<pre>'.print_r($array, true).'</pre>';
+        echo '<pre>' . print_r($array, true) . '</pre>';
         exit();
     }
 }
 
-if (! function_exists('abort')) {
+if (!function_exists('abort')) {
     function abort($code = 404)
     {
         header('Content-Type: application/json; charset=utf-8');
@@ -40,14 +40,14 @@ if (! function_exists('abort')) {
     }
 }
 
-if (! function_exists('response')) {
+if (!function_exists('response')) {
     function response()
     {
         return new Response;
     }
 }
 
-if (! function_exists('request')) {
+if (!function_exists('request')) {
     function request($key = null, $default = null)
     {
         $request = new Request;
@@ -60,14 +60,14 @@ if (! function_exists('request')) {
     }
 }
 
-if (! function_exists('bcrypt')) {
+if (!function_exists('bcrypt')) {
     function bcrypt($password)
     {
         return password_hash($password, PASSWORD_BCRYPT);
     }
 }
 
-if (! function_exists('title_case')) {
+if (!function_exists('title_case')) {
     function title_case($str)
     {
         return ucwords(str_replace('_', ' ', $str));

@@ -18,5 +18,5 @@ try {
     $db->query($sql);
     echo "New records created successfully. \n";
 } catch (PDOException $e) {
-    echo $sql."\n".$e->getMessage();
+    echo $sql . "\n" . $e->getMessage();
 }

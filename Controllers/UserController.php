@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Core\Validator;
 use Core\Facades\DB;
 
 class UserController
@@ -28,14 +29,18 @@ class UserController
 
     public function store()
     {
-        $name = request('name');
-        $email = request('email');
-        $password = request('password');
+        $data = request()->all();
+
+        Validator::make($data, [
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required'],
+        ])->validate();
 
         $result = DB::query('insert into users (name, email, password) values (:name, :email, :password)', [
-            'name' => $name,
-            'email' => $email,
-            'password' => bcrypt($password),
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
         ]);
 
         return $this->show($result->lastInsertId());
@@ -43,15 +48,19 @@ class UserController
 
     public function update($id)
     {
-        $name = request('name');
-        $email = request('email');
-        $password = request('password');
+        $data = request()->all();
+
+        Validator::make($data, [
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users,email,' . $id . ',id'],
+            'password' => ['required'],
+        ])->validate();
 
         DB::query('UPDATE users SET name=:name, email=:email, password=:password WHERE id=:id', [
             'id' => $id,
-            'name' => $name,
-            'email' => $email,
-            'password' => bcrypt($password),
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
         ]);
 
         return $this->show($id);

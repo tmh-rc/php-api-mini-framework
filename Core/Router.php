@@ -2,7 +2,6 @@
 
 namespace Core;
 
-use Exception;
 use Middleware\Middleware;
 
 class Router
@@ -68,11 +67,7 @@ class Router
                 $obj = new $route['controller'];
                 $method = $route['action'];
                 $params = $matches;
-                try {
-                    call_user_func_array([$obj, $method], $params);
-                } catch (\Throwable $e) {
-                    throw new Exception('Error: '.$e->getMessage());
-                }
+                call_user_func_array([$obj, $method], $params);
             }
         }
 
