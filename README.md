@@ -124,6 +124,6 @@ https://laravel.com/docs/10.x/pint#running-pint
 
 ## Todo
 
-- [ ] Validation
+- [x] Validation
 - [ ] Middleware
 - [ ] Authentication
