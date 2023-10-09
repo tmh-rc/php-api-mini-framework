@@ -1,27 +1,26 @@
 <?php
 
 $arguments = $argv;
-unset($arguments[0]);
+unset($arguments[0]); // remove filename artisan
 
-$filename = str_replace(':', '-', implode('-', $arguments));
-$command = "php command/$filename.php";
+$command = implode(' ', $arguments);
 
-$hiddenCommonds = [
-    'command.php'
+$commands = [
+    'db:setup' => 'commands/db-setup.php',
+    'db:create' => 'commands/db-create.php',
+    'migrate' => 'commands/migrate.php',
+    'migrate:reset' => 'commands/migrate-reset.php',
+    'serve' => 'commands/serve.php',
+    'setup' => 'commands/setup.php',
 ];
 
-if(count($arguments) == 0) {
-    $dir = scandir('command');
-    $files = array_diff($dir, ['.', '..']);
-    $files = array_filter($files, function($file) use ($hiddenCommonds) {
-        return !in_array($file, $hiddenCommonds);
-    });
-    $files = array_map(function($file) {
-        return 'php artian ' . str_replace('.php', '', $file);
-    }, $files);
-    $commands = implode("\n", $files);
-    echo "Avaliable commands: \n$commands";
-    die();
+if(! array_key_exists($command, $commands)) {
+    $commands = implode("\n", array_keys($commands));
+    echo "Available commands: \n$commands";
+
+    exit;
 }
 
-echo shell_exec($command);
+$file = $commands[$command];
+
+echo shell_exec("php $file");
